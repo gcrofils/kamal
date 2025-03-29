@@ -44,7 +44,9 @@ class Kamal::Configuration::Proxy
       "forward-headers": proxy_config.dig("forward_headers"),
       "tls-redirect": proxy_config.dig("ssl_redirect"),
       "log-request-header": proxy_config.dig("logging", "request_headers") || DEFAULT_LOG_REQUEST_HEADERS,
-      "log-response-header": proxy_config.dig("logging", "response_headers")
+      "log-response-header": proxy_config.dig("logging", "response_headers"),
+      "tls-certificate-path": "/home/kamal-proxy/.config/certs/cert.pem",
+      "tls-private-key-path": "/home/kamal-proxy/.config/certs/key.pem",
     }.compact
   end
 
