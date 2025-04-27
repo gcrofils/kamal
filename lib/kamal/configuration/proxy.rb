@@ -47,11 +47,23 @@ class Kamal::Configuration::Proxy
       "log-response-header": proxy_config.dig("logging", "response_headers"),
       "tls-certificate-path": "/home/kamal-proxy/.config/certs/cert.pem",
       "tls-private-key-path": "/home/kamal-proxy/.config/certs/key.pem",
+      "error-pages": error_pages
     }.compact
   end
 
   def deploy_command_args(target:)
     optionize ({ target: "#{target}:#{app_port}" }).merge(deploy_options), with: "="
+  end
+
+  def stop_options(drain_timeout: nil, message: nil)
+    {
+      "drain-timeout": seconds_duration(drain_timeout),
+      message: message
+    }.compact
+  end
+
+  def stop_command_args(**options)
+    optionize stop_options(**options), with: "="
   end
 
   def merge(other)
@@ -61,5 +73,9 @@ class Kamal::Configuration::Proxy
   private
     def seconds_duration(value)
       value ? "#{value}s" : nil
+    end
+
+    def error_pages
+      File.join config.proxy_boot.error_pages_container_directory, config.version if config.error_pages_path
     end
 end
