@@ -50,9 +50,14 @@ gem 'kamal', require: false, git: "https://github.com/USERNAME/kamal"
 
 ### 4. Add `.kamal/proxy/options` on the server:
 
-```bash
+```bash v.0.8.4
 --publish 80:80 --publish 443:443 --log-opt max-size=10m --volume /etc/kamal/certs:/home/kamal-proxy/.config/certs:ro --env
 ```
+
+```bash v.0.8.7
+--publish 80:80 --publish 443:443 --log-opt max-size=10m --volume /etc/kamal/certs:/home/kamal-proxy/.config/certs:ro
+```
+
 
 This works because `kamal` reads this file when launching the proxy container:
 
